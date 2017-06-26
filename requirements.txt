@@ -8,7 +8,6 @@ Babel==2.2.0
 backports-abc==0.5
 backports.functools-lru-cache==1.3
 backports.ssl-match-hostname==3.4.0.2
-basemap==1.0.8
 bcdoc==0.12.2
 bcrypt==3.1.1
 beautifulsoup==3.2.1
