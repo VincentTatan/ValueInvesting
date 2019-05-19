@@ -3,12 +3,13 @@ def eligibilitycheck(ticker,dfformatted):
     legiblestock = True
     reasonlist=[]
 
+    # print (dfformatted)
     # EPS increases over the year (consistent)
-    for growth in dfformatted.epsgrowth:
-        if growth<0:
-            legiblestock = False
-            reasonlist.append('there is negative growth '+str(growth))
-            break
+    # for growth in dfformatted.epsgrowth:
+    #     if growth<0:
+    #         legiblestock = False
+    #         reasonlist.append('there is negative growth '+str(growth))
+    #         break
     # ROE > 0.15
     if dfformatted.roe.mean()<0.13:
             legiblestock = False
