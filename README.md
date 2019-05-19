@@ -5,6 +5,9 @@ Inspired by Sean Seah Book -- Gone Fishing with (Warren Buffett)[http://www.acep
 
 ## Input
 List of the companies through SP500, Russell, and self inputted
+* Getting SP500 stocks info from wikipedia
+* Getting russell stocks info
+* Adding own list of stocks info
 
 
 ## Web scraping

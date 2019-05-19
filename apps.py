@@ -34,82 +34,31 @@ app.scripts.append_script({
     "external_url": my_js_url
 })
 
-markdown_text = '''
-#### Dash and Markdown
-
-Inspired by Sean Seah Book -- Gone Fishing with (Warren Buffett)[http://www.aceprofitsacademy.com/wp-content/uploads/2016/09/Gone-Fishing-with-Buffett.pdf]
-
-In here we are going to try to scrape financial data:
-Input: List of the companies
-
-Web scraping: 
-* Find the shareprice by year and the following metrics:
-    * EPS
-    * ROE
-    * ROA
-    * Long term debt
-    * Total Income
-    * Debt to Equity
-    * Interest Coverage Ratio
-
-Methods:
-* Given list of the companies, find out the feasibility to invest
-    * Been in market minimal 10 years
-    * Have the track records (EPS per year)
-    * Have efficiency (ROE > 15%) -- Net income / shareholder equity
-    * Determine manipulation (ROA > 7%) -- Net income / Total Asset
-    * Have small long term debt (Long term debt <5* total income)
-    * Low Debt to Equity
-    * Ability to pay interest: (Interest Coverage Ratio >3) -- EBIT / Interest expenses
-
-Outputs:
-* Ranking of each company in terms of return rate given the value investing methodology
-    * Find EPS Annual Compounded Growth Rate
-    * Estimate EPS 10 years from now
-    * Estimate stock price 10 years from now (Stock Price EPS * Average PE)
-    * Determine target by price today based on returns(discount rate 15%/20%)
-    * Add margin of safety (Safety net 15%)
-
-Additional:
-* Qualitative Assessment of the companies
-    * Advantages in business (product differentiation, branding, low price producer, high switching cost, legal barriers to entry)
-    * Ability of foolhardy management (even a fool can run)
-    * Avoid price competitive business    
-'''
-
 app.layout = html.Div([
     html.Div([
 
         html.H1('Value Investing'),
-        # html.Div([
-        #     dcc.Markdown(children=markdown_text)
-        # ]),
         # First let users choose stocks
-        html.H2('1) Choose a stock or lists of them (to be developed)'),
+        html.H2('Choose a stock ticker'),
         dcc.Dropdown(
             id='my-dropdown',
-            # options=[
-            #     {'label': 'Coke', 'value': 'COKE'},
-            #     {'label': 'Tesla', 'value': 'TSLA'},
-            #     {'label': 'Apple', 'value': 'AAPL'}
-            # ],
-            options=save_sp500_stocks_info()+save_russell_info()+save_self_stocks_info(),
+            options=save_sp500_stocks_info()+save_self_stocks_info(),
             value='coke'
         ),
-        html.H2('2) See the 5 year trends of your stocks'),
+        html.H2('5 years stocks price graph'),
         dcc.Graph(id='my-graph'),
         html.P('')
 
     ],style={'width': '40%', 'display': 'inline-block'}),
     html.Div([
-        html.H2('3) Received data scraped from the stocks financial reporting (balancesheet, incomestatement)'),
+        html.H2('Critical Variables and Ratios'),
         html.Table(id='my-table'),
         html.P(''),
-        html.H2('4) Using the tips from Warren Buffett, here are the reasons why this stocks might not be suitable'),
+        html.H2('Warning Flags'),
         html.Table(id='reason-list'),
         html.P('')
     ], style={'width': '55%', 'float': 'right', 'display': 'inline-block'}),
-    html.H2('5) Here are the expected future price based on discount rate and margin rate'),
+    html.H4('Discount Calculation Rate'),
     dcc.Slider(
         id='discountrate-slider',
         min=0,
@@ -118,7 +67,7 @@ app.layout = html.Div([
         step=0.05,
         marks={i: '{}'.format(round(i,2)) for i in np.arange(0, 1, 0.05)}
     ),
-    html.P(''),
+    html.H4('Margin Calculation Rate'),
     dcc.Slider(
         id='marginrate-slider',
         min=0,
@@ -127,7 +76,7 @@ app.layout = html.Div([
         step=0.05,
         marks={i: '{}'.format(round(i,2)) for i in np.arange(0, 1, 0.05)}
     ),
-    html.P(''),
+    html.H4('Finalized Price Table'),
     html.Table(id='expected-future-price-table')
 ])
 
@@ -178,7 +127,7 @@ def generate_future_price_table(selected_dropdown_value,discountrate,marginrate,
     global financialreportingdf # Needed to modify global copy of financialreportingdf
     global stockpricedf
     pricedf = generate_price_df(selected_dropdown_value.strip(),financialreportingdf,stockpricedf,discountrate,marginrate)
- 
+
     # Header
     return [html.Tr([html.Th(col) for col in pricedf.columns])] + [html.Tr([
         html.Td(round(pricedf.iloc[i][col],2)) for col in pricedf.columns
