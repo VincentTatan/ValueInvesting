@@ -45,7 +45,7 @@ def generate_price_df(ticker,financialreportingdf,stockpricedf,discountrate,marg
 	dfprice['presentshareprice'] = abs(np.pv(discountrate,years,0,fv=dfprice['futureshareprice']))
 	dfprice['marginalizedprice'] = dfprice['presentshareprice']*(1-marginrate)
 
-	dfprice['Buy or Sell'] = np.where(dfprice['marginalizedprice']>dfprice['presentshareprice'], 'BUY', 'SELL')
+	# dfprice['Buy or Sell'] = np.where(dfprice['marginalizedprice']>dfprice['presentshareprice'], 'BUY', 'SELL')
 
 	return dfprice
 
