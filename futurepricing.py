@@ -34,18 +34,20 @@ def generate_price_df(ticker,financialreportingdf,stockpricedf,discountrate,marg
 	dfprice.set_index('ticker',inplace=True)
 
 
-	dfprice['lastshareprice']=stockpricedf.Close.tail(1).values[0]
 
 	#conservative
 	dfprice['peratio'] = findMinimumEPS(stockpricedf,financialreportingdf)
 
-	dfprice['futureshareprice'] = dfprice['futureeps']*dfprice['peratio']
+	dfprice['FV'] = dfprice['futureeps']*dfprice['peratio']
 
 
-	dfprice['presentshareprice'] = abs(np.pv(discountrate,years,0,fv=dfprice['futureshareprice']))
-	dfprice['marginalizedprice'] = dfprice['presentshareprice']*(1-marginrate)
+	dfprice['PV'] = abs(np.pv(discountrate,years,0,fv=dfprice['FV']))
+	dfprice['marginprice'] = dfprice['PV']*(1-marginrate)
+	dfprice['lastshareprice']=stockpricedf.Close.tail(1).values[0]
 
-	# dfprice['Buy or Sell'] = np.where(dfprice['marginalizedprice']>dfprice['presentshareprice'], 'BUY', 'SELL')
+	dfprice['decision'] = np.where((dfprice['lastshareprice']<dfprice['marginprice']),'BUY','SELL')
+
+
 
 	return dfprice
 

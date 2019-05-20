@@ -76,7 +76,6 @@ app.layout = html.Div([
         step=0.05,
         marks={i: '{}'.format(round(i,2)) for i in np.arange(0, 1, 0.05)}
     ),
-    html.H4('Finalized Price Table'),
     html.Table(id='expected-future-price-table')
 ])
 
@@ -130,7 +129,8 @@ def generate_future_price_table(selected_dropdown_value,discountrate,marginrate,
 
     # Header
     return [html.Tr([html.Th(col) for col in pricedf.columns])] + [html.Tr([
-        html.Td(round(pricedf.iloc[i][col],2)) for col in pricedf.columns
+        html.Td(pricedf.iloc[i][col]) if col == 'decision' else html.Td(round(pricedf.iloc[i][col],2))
+        for col in pricedf.columns
     ]) for i in range(min(len(pricedf), max_rows))]
     
 
