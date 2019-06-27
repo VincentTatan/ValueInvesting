@@ -67,7 +67,7 @@ def getfinancialreportingdf(ticker):
 
     ## Make it into Dataframes
     df= pd.DataFrame({'eps': eps,'epsgrowth': epsgrowth,'netincome': netincome,'shareholderequity': shareholderequity,'roa': 
-                  roa,'longtermdebt': longtermdebt,'interestexpense': interestexpense,'ebitda': ebitda},index=[2013,2014,2015,2016,2017])
+                  roa,'longtermdebt': longtermdebt,'interestexpense': interestexpense,'ebitda': ebitda},index=[2014,2015,2016,2017,2018])
     return df
 
 def getelementinlist(list,element):
@@ -162,6 +162,7 @@ def save_self_stocks_info():
     dictlist.append({'value':'kbsty', 'label':'Kobe steel'})
     dictlist.append({'value':'NESN', 'label':'Nestle'})
     dictlist.append({'value':'BN', 'label':'Danone'})
+    dictlist.append({'value': 'DATA', 'label': 'Tableau Software Data Visualization'})
 
 
 

@@ -42,7 +42,12 @@ def generate_price_df(ticker,financialreportingdf,stockpricedf,discountrate,marg
 
 
 	dfprice['PV'] = abs(np.pv(discountrate,years,0,fv=dfprice['FV']))
-	dfprice['marginprice'] = dfprice['PV']*(1-marginrate)
+
+	if dfprice['FV'].values[0] > 0:
+		dfprice['marginprice'] = dfprice['PV']*(1-marginrate)
+	else:
+		dfprice['marginprice'] = 0
+
 	dfprice['lastshareprice']=stockpricedf.Close.tail(1).values[0]
 
 	dfprice['decision'] = np.where((dfprice['lastshareprice']<dfprice['marginprice']),'BUY','SELL')
