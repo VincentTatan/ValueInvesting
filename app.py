@@ -17,22 +17,8 @@ margin = 0.15
 
 
 # Set up the app
-external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
-app = dash.Dash(external_stylesheets=external_stylesheets)
+app = dash.Dash(__name__)
 server = app.server
-
-# Append an externally hosted CSS stylesheet
-my_css_url = "https://unpkg.com/normalize.css@5.0.0"
-app.css.append_css({
-    "external_url": my_css_url,
-    "external_url": "https://codepen.io/chriddyp/pen/bWLwgP.css"
-})
-
-# Append an externally hosted JS bundle
-my_js_url = 'https://unkpg.com/some-npm-package.js'
-app.scripts.append_script({
-    "external_url": my_js_url
-})
 
 app.layout = html.Div([
     html.Div([
@@ -129,7 +115,7 @@ def generate_future_price_table(selected_dropdown_value,discountrate,marginrate,
 
     # Header
     return [html.Tr([html.Th(col) for col in pricedf.columns])] + [html.Tr([
-        html.Td(pricedf.iloc[i][col]) if col == 'decision' else html.Td(round(pricedf.iloc[i][col],2))
+        html.Td(html.B(pricedf.iloc[i][col]))  if col == 'decision' else html.Td(round(pricedf.iloc[i][col],2))
         for col in pricedf.columns
     ]) for i in range(min(len(pricedf), max_rows))]
     
