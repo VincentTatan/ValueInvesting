@@ -19,7 +19,7 @@ margin = 0.15
 # Set up the app
 external_stylesheets = ['https://codepen.io/chriddyp/pen/bWLwgP.css']
 app = dash.Dash(external_stylesheets=external_stylesheets)
-
+server = app.server
 
 # Append an externally hosted CSS stylesheet
 my_css_url = "https://unpkg.com/normalize.css@5.0.0"
