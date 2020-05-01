@@ -1,8 +1,7 @@
 import pandas as pd
-from urllib.request import urlopen
 from bs4 import BeautifulSoup
 import requests
-
+from datetime import date
 from format import format
 
 def getfinancialreportingdf(ticker):
@@ -66,8 +65,9 @@ def getfinancialreportingdf(ticker):
     # Don't forget to add in roe, interest coverage ratio
 
     ## Make it into Dataframes
+
     df= pd.DataFrame({'eps': eps,'epsgrowth': epsgrowth,'netincome': netincome,'shareholderequity': shareholderequity,'roa': 
-                  roa,'longtermdebt': longtermdebt,'interestexpense': interestexpense,'ebitda': ebitda},index=[2014,2015,2016,2017,2018])
+                  roa,'longtermdebt': longtermdebt,'interestexpense': interestexpense,'ebitda': ebitda},index=range(date.today().year-5,date.today().year))
     return df
 
 def getelementinlist(list,element):
@@ -163,11 +163,6 @@ def save_self_stocks_info():
     dictlist.append({'value':'NESN', 'label':'Nestle'})
     dictlist.append({'value':'BN', 'label':'Danone'})
     dictlist.append({'value': 'DATA', 'label': 'Tableau Software Data Visualization'})
-
-
-
-
-
-
+    dictlist.append({'value': 'S58','label':'SATS'})
 
     return dictlist
