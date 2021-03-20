@@ -17,7 +17,7 @@ idna==2.8
 importlib-metadata==2.0.0
 ipython-genutils==0.2.0
 itsdangerous==1.1.0
-Jinja2==2.11.2
+Jinja2==2.11.3
 jsonschema==3.2.0
 jupyter-core==4.6.3
 lxml==4.3.3
